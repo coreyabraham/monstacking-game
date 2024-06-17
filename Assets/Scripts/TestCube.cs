@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TestCube : MonoBehaviour
 {
-    private void Start()
+    public void InputReceived(InputAction.CallbackContext context)
     {
-        print("Initialized TestCube.cs!");
-        // TODO: Hook Cube to events here!
+        //print(context.performed); // button down : true, button not down : false
+        print(context.ReadValue<float>()); // analog button value (0 - 1 [decimal range])
+
+
     }
 }
