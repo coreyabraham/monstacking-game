@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 public class Audible : ScriptableObject
 {
     [field: SerializeField] public string FriendlyName { get; set; }
-    [field: SerializeField] public AudioMixerGroup MixerGroup { get; set; }
     [field: SerializeField] public AudioClip AudioClip { get; set; }
+    [field: SerializeField] public AudioMixerGroup MixerGroup { get; set; }
+
+    internal AudioSource Source;
 }

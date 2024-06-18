@@ -3,51 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioHandler : MonoBehaviour
+public class AudioHandler : Singleton<AudioHandler>
 {
-    [System.Serializable]
-    struct SourceData
-    {
-        public string SourceName;
-        public AudioMixerGroup SourceMixerGroup;
-    }
+    [field: SerializeField] private GameObject ParentObject;
+    [field: SerializeField] private List<string> AudioPaths;
+    public Dictionary<string, Audible> Audibles;
 
-    [System.Serializable]
-    struct AudibleData
+    protected override void Initialize()
     {
-        public Audible Audible;
-        public AudioMixerGroup MixerGroup;
-    }
+        Audibles = new();
+        List<Audible> localAudibles = new();
 
-    [field: SerializeField] private List<SourceData> Sources;
-    [field: SerializeField] private List<AudibleData> Audibles;
-
-    private void Awake()
-    {
-        foreach (SourceData data in Sources)
+        foreach (string path in AudioPaths)
         {
-            GameObject gameObject = new();
-            gameObject.name = data.SourceName;
-            gameObject.transform.parent = transform;
+            localAudibles.AddRange(Resources.LoadAll<Audible>(path));
+        }
 
-            AudioSource source = gameObject.AddComponent<AudioSource>();
-            source.outputAudioMixerGroup = data.SourceMixerGroup;
+        foreach (Audible data in localAudibles)
+        {
+            AudioSource source = ParentObject.AddComponent<AudioSource>();
+            source.clip = data.AudioClip;
+            data.Source = source;
+
+            bool check = string.IsNullOrWhiteSpace(data.FriendlyName) || Audibles.ContainsKey(data.FriendlyName);
+            string key = (check ? data.AudioClip.name : data.FriendlyName);
+
+            Audibles.Add(key, data);
         }
     }
 
-    //public void PlayAudible(AudibleData audible)
-    //{
+    private Audible GetAudible(string clip)
+    {
+        Audible audible;
+        bool exists = Audibles.TryGetValue(clip, out audible);
 
-    //}
+        if (!exists)
+        {
+            Debug.LogWarning("AudioHandler.cs | Cannot get Audible Scriptable! Perhaps the provided clip was incorrectly spelt or not used? (" + clip + ")");
+            return null;
+        }
 
-    //public void PlayAudible(string name)
-    //{
-    //    foreach (AudibleData data in Audibles)
-    //    {
-    //        if (name != data.audible.FriendlyName) continue;
+        return audible;
+    }
 
-    //        PlayAudible(data);
-    //        break;
-    //    }
-    //}
+    internal bool IsPlaying(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        return audible.Source.isPlaying;
+    }
+
+    internal void Play(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        audible.Source.Play();
+    }
+
+    internal void PlayOnce(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        audible.Source.PlayOneShot(audible.Source.clip);
+    }
+
+    internal void Stop(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        audible.Source.Stop();
+    }
+
+    internal void Pause(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        audible.Source.Pause();
+    }
+
+    internal void UnPause(string clip)
+    {
+        Audible audible = GetAudible(clip);
+        audible.Source.UnPause();
+    }
+
+    // Add in Fading Here!
 }

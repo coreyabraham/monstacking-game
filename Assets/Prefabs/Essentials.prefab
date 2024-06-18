@@ -567,14 +567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854ae4ade4e3c6444ac48422238bf2e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sources:
-  - SourceName: Sound Effects
-    SourceMixerGroup: {fileID: 1861644276330236638, guid: fc8947dd50b673f4da066a96f1c5a1e1, type: 2}
-  - SourceName: Music
-    SourceMixerGroup: {fileID: 8330447423530136809, guid: fc8947dd50b673f4da066a96f1c5a1e1, type: 2}
-  Audibles:
-  - audible: {fileID: 11400000, guid: 53e799bf21674c04b9d2725acab012c4, type: 2}
-    groupName: Sound Effects
+  ParentObject: {fileID: 8385764000605347823}
+  AudioPaths:
+  - Audibles/Sounds
+  - Audibles/Music
 --- !u!1001 &7972538828327528109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -586,6 +582,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR System
       objectReference: {fileID: 0}
+    - target: {fileID: 8394951143543957616, guid: 3112ff1365973654a80d03d007650867, type: 3}
+      propertyPath: teleportProvider
+      value: 
+      objectReference: {fileID: 1632382837859518623}
     - target: {fileID: 8428953862293142850, guid: 3112ff1365973654a80d03d007650867, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -637,6 +637,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7741416231406466128, guid: 3112ff1365973654a80d03d007650867, type: 3}
   m_PrefabInstance: {fileID: 7972538828327528109}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1632382837859518623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8647833053797232178, guid: 3112ff1365973654a80d03d007650867, type: 3}
+  m_PrefabInstance: {fileID: 7972538828327528109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1899829871800687599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8428953862293142850, guid: 3112ff1365973654a80d03d007650867, type: 3}
