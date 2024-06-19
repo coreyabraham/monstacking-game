@@ -1,25 +1,28 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DataHandler : MonoBehaviour
+public class DataHandler : Singleton<DataHandler>
 {
     [field: Header("Settings")]
     [field: SerializeField] private string DataFolder { get; set; } = "CommonData";
     [field: SerializeField] private string DataAttribute { get; set; } = ".dat";
     [field: SerializeField] private string DefaultDataFileName { get; set; } = "DataFile";
-    [field: SerializeField] private bool ValidateSetupOnStartup { get; set; } = true;
 
-    [field: Space(5)]
+    [field: Space(0.5f)]
+
+    [field: SerializeField] private bool ValidateSetupOnStartup { get; set; } = true;
+    [field: SerializeField] private bool DisableDebugOutput { get; set; } = true;
 
     [field: Header("Events")]
-    [field: SerializeField] private UnityEvent ValidatedData;
-    [field: SerializeField] private UnityEvent SavedToFile;
-    [field: SerializeField] private UnityEvent LoadedFromFile;
+    [field: SerializeField] public UnityEvent ValidatedData;
+    [field: SerializeField] public UnityEvent SavedToFile;
+    [field: SerializeField] public UnityEvent LoadedFromFile;
 
-    private void Awake()
+    protected override void Initialize()
     {
         if (!ValidateSetupOnStartup) return;
         if (Directory.Exists(DataFolder)) return;
@@ -27,6 +30,8 @@ public class DataHandler : MonoBehaviour
         Directory.CreateDirectory(DataFolder);
         ValidatedData?.Invoke();
     }
+
+    private string GetFolderDirectory() => Directory.GetCurrentDirectory() + "/" + DataFolder;
 
     public void SaveToFile(SavableData data, string filename)
     {
@@ -41,7 +46,7 @@ public class DataHandler : MonoBehaviour
 
         SavedToFile?.Invoke();
 
-        Debug.Log("DataHandler.cs | Successfully saved file: " + filename + " to disk. Check directory: " + DataFolder + "/ to validate!", this);
+        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully saved file: " + filename + " to disk. Check directory: " + GetFolderDirectory() + "/ to validate!", this);
     }
 
     public SavableData ReadFromFile(string filename)
@@ -51,7 +56,7 @@ public class DataHandler : MonoBehaviour
 
         if (!File.Exists(DataFolder + "/" + filename + DataAttribute))
         {
-            Debug.LogWarning("DataHandler.cs | Cannot retrieve data file: " + filename + DataAttribute + "as it likely doesn't exist!");
+            if (!DisableDebugOutput) Debug.LogWarning("DataHandler.cs | Cannot retrieve data file: " + filename + DataAttribute + "as it likely doesn't exist!");
             return new SavableData();
         }
 
@@ -63,8 +68,35 @@ public class DataHandler : MonoBehaviour
 
         LoadedFromFile?.Invoke();
 
-        Debug.Log("DataHandler.cs | Successfully retrieved data from file: " + filename + "! (" + DataFolder + "/" + filename + DataAttribute + ")");
+        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully retrieved data from file: " + filename + "! (" + GetFolderDirectory() + "/" + filename + DataAttribute + ")");
 
         return loadedData;
+    }
+
+    public List<SavableData> ReadFromMultipleFiles()
+    {
+        string[] files = Directory.GetFiles(DataFolder);
+        List<SavableData> allDatAObjects = new();
+
+        foreach (string str in files)
+        {
+            string step1 = str.Remove(str.Length - DataAttribute.Length, DataAttribute.Length);
+            // print("Step1: " + step1);
+
+            string step2 = step1.Remove(0, DataFolder.Length + 1);
+            // print("Step2: " + step2);
+
+            SavableData data = ReadFromFile(step2);
+
+            if (string.IsNullOrEmpty(data.name))
+            {
+                if (!DisableDebugOutput) Debug.LogWarning("Data from File: " + str + " Cannot be read from!");
+                continue;
+            }
+
+            allDatAObjects.Add(data);
+        }
+
+        return allDatAObjects;
     }
 }

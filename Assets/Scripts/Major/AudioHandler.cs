@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioHandler : Singleton<AudioHandler>
 {

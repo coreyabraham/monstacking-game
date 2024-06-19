@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1c55b41cad3f54286637581c0d9d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestSound: Testable
 --- !u!65 &156622972
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -951,6 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1c55b41cad3f54286637581c0d9d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestSound: Testable
 --- !u!65 &840862071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1269,8 +1271,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1883910115477343965, guid: 188cce93a683e4f42b5be20c2701ea58, type: 3}
-      propertyPath: <TeleportationToggleable>k__BackingField
+      propertyPath: <EnableDeviceEmulator>k__BackingField
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883910115477343965, guid: 188cce93a683e4f42b5be20c2701ea58, type: 3}
+      propertyPath: <TeleportationToggleable>k__BackingField
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2987070075548286582, guid: 188cce93a683e4f42b5be20c2701ea58, type: 3}
       propertyPath: m_DebounceTime
@@ -1403,6 +1409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739576457}
+  - component: {fileID: 1739576458}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -1430,6 +1437,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1739576458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739576456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3039264b054414d85efc26ce761575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testData:
+    time: 1
+    score: 1234987
+    name: Timmothy
 --- !u!1 &1886119102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1c55b41cad3f54286637581c0d9d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestSound: Testable
 --- !u!1 &1943461695
 GameObject:
   m_ObjectHideFlags: 0

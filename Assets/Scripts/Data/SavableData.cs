@@ -1,3 +1,4 @@
+[System.Serializable]
 public struct SavableData
 {
     /// <summary>
