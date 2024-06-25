@@ -7,7 +7,7 @@ public class DataTester : MonoBehaviour
 
     private void Callback()
     {
-        List<SavableData> results = DataHandler.Instance.ReadFromMultipleFiles();
+        List<SavableData> results = DataHandler.Instance.CachedData;
 
         foreach (SavableData data in results)
         {
@@ -17,7 +17,7 @@ public class DataTester : MonoBehaviour
 
     private void Start()
     {
-        DataHandler.Instance.SavedToFile.AddListener(Callback);
+        DataHandler.Instance.Events.SavedToFile.AddListener(Callback);
         DataHandler.Instance.SaveToFile(testData, testData.name);
     }
 }

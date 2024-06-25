@@ -318,9 +318,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1591342256}
-  - {fileID: 537360565}
   - {fileID: 1321045690}
   - {fileID: 1332582787}
+  - {fileID: 537360565}
   - {fileID: 1327615023}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -473,7 +473,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 350305529}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &537360566
 MeshCollider:
@@ -865,7 +865,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9a5f486755d33f141aac265414eccd02, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a5f486755d33f141aac265414eccd02, type: 3}
       propertyPath: m_LocalPosition.x
@@ -991,7 +991,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a66dbe8984675be4f8e0b3d940055f20, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a66dbe8984675be4f8e0b3d940055f20, type: 3}
       propertyPath: m_LocalScale.x

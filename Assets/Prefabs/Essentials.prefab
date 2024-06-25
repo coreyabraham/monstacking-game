@@ -477,18 +477,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DataFolder>k__BackingField: CommonData
   <DataAttribute>k__BackingField: .dat
-  <DefaultDataFileName>k__BackingField: DataFile
+  <DefaultDataUserName>k__BackingField: DataFile
   <ValidateSetupOnStartup>k__BackingField: 1
   <DisableDebugOutput>k__BackingField: 1
-  ValidatedData:
-    m_PersistentCalls:
-      m_Calls: []
-  SavedToFile:
-    m_PersistentCalls:
-      m_Calls: []
-  LoadedFromFile:
-    m_PersistentCalls:
-      m_Calls: []
+  Events:
+    ValidatedData:
+      m_PersistentCalls:
+        m_Calls: []
+    SavedToFile:
+      m_PersistentCalls:
+        m_Calls: []
+    LoadedFromFile:
+      m_PersistentCalls:
+        m_Calls: []
+    CachedDataUpdated:
+      m_PersistentCalls:
+        m_Calls: []
+  CachedData: []
 --- !u!1 &7954162003607489397
 GameObject:
   m_ObjectHideFlags: 0

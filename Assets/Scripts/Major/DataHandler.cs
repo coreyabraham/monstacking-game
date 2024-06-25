@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
@@ -7,86 +7,116 @@ using UnityEngine.Events;
 
 public class DataHandler : Singleton<DataHandler>
 {
+    [System.Serializable]
+    public class EventCollection
+    {
+        public UnityEvent ValidatedData;
+        public UnityEvent SavedToFile;
+        public UnityEvent LoadedFromFile;
+        public UnityEvent CachedDataUpdated;
+    }
+
     [field: Header("Settings")]
     [field: SerializeField] private string DataFolder { get; set; } = "CommonData";
     [field: SerializeField] private string DataAttribute { get; set; } = ".dat";
-    [field: SerializeField] private string DefaultDataFileName { get; set; } = "DataFile";
+    [field: SerializeField] private string DefaultDataUserName { get; set; } = "DataFile";
 
     [field: Space(0.5f)]
 
     [field: SerializeField] private bool ValidateSetupOnStartup { get; set; } = true;
     [field: SerializeField] private bool DisableDebugOutput { get; set; } = true;
 
-    [field: Header("Events")]
-    [field: SerializeField] public UnityEvent ValidatedData;
-    [field: SerializeField] public UnityEvent SavedToFile;
-    [field: SerializeField] public UnityEvent LoadedFromFile;
+    [field: Header("Others")]
+    public EventCollection Events;
+    [field: SerializeField] public List<SavableData> CachedData = new();
 
     protected override void Initialize()
     {
         if (!ValidateSetupOnStartup) return;
+        
+        UpdateCachedFiles();
+        
         if (Directory.Exists(DataFolder)) return;
 
         Directory.CreateDirectory(DataFolder);
-        ValidatedData?.Invoke();
+        Events.ValidatedData?.Invoke();
     }
 
     private string GetFolderDirectory() => Directory.GetCurrentDirectory() + "/" + DataFolder;
 
-    public void SaveToFile(SavableData data, string filename)
+    private string ResolveDuplicatedUserName(string username)
     {
-        if (string.IsNullOrWhiteSpace(filename))
-            filename = DefaultDataFileName;
+        int amountOfIdenticalNames = 0;
 
+        foreach (SavableData readData in CachedData)
+        {
+            if (readData.name != username) continue;
+            amountOfIdenticalNames++;
+        }
+
+        print(amountOfIdenticalNames);
+        print(amountOfIdenticalNames > 1);
+
+        print(username.Contains(" (" + amountOfIdenticalNames.ToString() + ")"));
+
+        return (amountOfIdenticalNames > 0) ? (username + " (" + amountOfIdenticalNames.ToString() + ")") : username;
+    }
+
+    public void SaveToFile(SavableData data, string username, bool updateCache = true)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+            username = DefaultDataUserName;
+
+        data.name = ResolveDuplicatedUserName(username);
+        username = data.name;
+        
         BinaryFormatter formatter = new();
-        FileStream dataFile = File.Create(DataFolder + "/" + filename + DataAttribute);
+        FileStream dataFile = File.Create(DataFolder + "/" + username + DataAttribute);
 
         formatter.Serialize(dataFile, data);
         dataFile.Close();
 
-        SavedToFile?.Invoke();
+        Events.SavedToFile?.Invoke();
 
-        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully saved file: " + filename + " to disk. Check directory: " + GetFolderDirectory() + "/ to validate!", this);
+        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully saved file: " + username + " to disk. Check directory: " + GetFolderDirectory() + "/ to validate!", this);
+        if (updateCache) UpdateCachedFiles();
     }
 
-    public SavableData ReadFromFile(string filename)
+    public SavableData ReadFromFile(string username)
     {
-        if (string.IsNullOrWhiteSpace(filename))
-            filename = DefaultDataFileName;
+        if (string.IsNullOrWhiteSpace(username))
+            username = DefaultDataUserName;
 
-        if (!File.Exists(DataFolder + "/" + filename + DataAttribute))
+        if (!File.Exists(DataFolder + "/" + username + DataAttribute))
         {
-            if (!DisableDebugOutput) Debug.LogWarning("DataHandler.cs | Cannot retrieve data file: " + filename + DataAttribute + "as it likely doesn't exist!");
+            if (!DisableDebugOutput) Debug.LogWarning("DataHandler.cs | Cannot retrieve data file: " + username + DataAttribute + "as it likely doesn't exist!");
             return new SavableData();
         }
 
         BinaryFormatter formatter = new();
-        FileStream dataFile = File.Open(DataFolder + "/" + filename + DataAttribute, FileMode.Open);
+        FileStream dataFile = File.Open(DataFolder + "/" + username + DataAttribute, FileMode.Open);
 
         SavableData loadedData = (SavableData)formatter.Deserialize(dataFile);
         dataFile.Close();
 
-        LoadedFromFile?.Invoke();
+        Events.LoadedFromFile?.Invoke();
 
-        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully retrieved data from file: " + filename + "! (" + GetFolderDirectory() + "/" + filename + DataAttribute + ")");
+        if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully retrieved data from file: " + username + "! (" + GetFolderDirectory() + "/" + username + DataAttribute + ")");
 
         return loadedData;
     }
 
-    public List<SavableData> ReadFromMultipleFiles()
+    public void UpdateCachedFiles()
     {
         string[] files = Directory.GetFiles(DataFolder);
-        List<SavableData> allDatAObjects = new();
+        List<SavableData> allDataObjects = new();
 
         foreach (string str in files)
         {
             string step1 = str.Remove(str.Length - DataAttribute.Length, DataAttribute.Length);
-            // print("Step1: " + step1);
+            string final = step1.Remove(0, DataFolder.Length + 1);
 
-            string step2 = step1.Remove(0, DataFolder.Length + 1);
-            // print("Step2: " + step2);
-
-            SavableData data = ReadFromFile(step2);
+            SavableData data = ReadFromFile(final);
 
             if (string.IsNullOrEmpty(data.name))
             {
@@ -94,9 +124,10 @@ public class DataHandler : Singleton<DataHandler>
                 continue;
             }
 
-            allDatAObjects.Add(data);
+            allDataObjects.Add(data);
         }
 
-        return allDatAObjects;
+        CachedData = allDataObjects;
+        Events.CachedDataUpdated?.Invoke();
     }
 }
