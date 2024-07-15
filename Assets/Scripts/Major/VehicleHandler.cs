@@ -26,9 +26,6 @@ public class VehicleHandler : MonoBehaviour
     [field: Header("Settings - Spawning")]
     [field: SerializeField] private float IntervalBetweenSpawns { get; set; } = 1.0f;
 
-    [field: Header("Debug - PLEASE REMOVE BEFORE RELEASE!")]
-    [field: SerializeField] private bool StartGame;
-
     private float timeInterval = 0.0f;
 
     private void SpawnVehicle()
@@ -64,11 +61,7 @@ public class VehicleHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!GameHandler.Instance.IsGameRunning())
-        {
-            if (StartGame) GameHandler.Instance.StartGame();
-            return;
-        }
+        if (!GameHandler.Instance.IsGameRunning()) return;
 
         if (timeInterval < IntervalBetweenSpawns)
         {

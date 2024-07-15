@@ -3,9 +3,11 @@ using UnityEngine;
 public class VehicleBehaviour : MonoBehaviour
 {
     public VehicleType vehicleType;
+    public bool alternateSpeeds = false;
+
     [HideInInspector] public Vector3 vehicleDestination;
 
-    private float vehicleSpeed = 0.0f;
+    private float vehicleSpeed = 1.0f;
 
     private void FixedUpdate()
     {
@@ -18,6 +20,8 @@ public class VehicleBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        if (!alternateSpeeds) return;
+
         switch (vehicleType)
         {
             case VehicleType.Car: vehicleSpeed = 1.0f; break;

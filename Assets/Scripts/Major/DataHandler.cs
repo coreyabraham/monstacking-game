@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 using UnityEngine.Events;
+using System.Drawing;
 
 public class DataHandler : Singleton<DataHandler>
 {
@@ -108,6 +109,8 @@ public class DataHandler : Singleton<DataHandler>
 
     public void UpdateCachedFiles()
     {
+        if (!Directory.Exists(DataFolder)) Directory.CreateDirectory(DataFolder);
+
         string[] files = Directory.GetFiles(DataFolder);
         List<SavableData> allDataObjects = new();
 
