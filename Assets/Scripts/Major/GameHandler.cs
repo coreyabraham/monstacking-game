@@ -4,7 +4,7 @@ public class GameHandler : Singleton<GameHandler>
 {
     [field: Header("Global Settings")]
     [field: SerializeField] private bool StartRunningOnStartup { get; set; } = false;
-    [field: SerializeField] private float MaxTime { get; set; } = 240.0f;
+    [field: SerializeField] private float MaxTime { get; set; } = 180.0f;
 
     private float TimeElapsed = 0.0f;
     private float TimePlayedFor = 0.0f;

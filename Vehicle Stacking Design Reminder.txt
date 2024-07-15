@@ -1,0 +1,5 @@
+Before doing the stacking based code, you need to make sure objects placed within a set plane don't despawn, that revolving around the Boat, as any object that isn't placed on the Boat will eventually despawn after being grabbed since they're most likely obscuring other parts of the road and etc.
+
+When that's done, the stacking based code should be setup almost like a linked list, having vehicles that are below the currently highest object being linked with "previous" pointers and vehicles above another vehicle should point to it via a "next" value, this'll make sure everything has linked correctly, and if one object is nulled out at any point during gameplay, that's the tower falling apart, which is then considered a mass loss of score (as a result of all the objects falling apart)
+
+This needs to account for the tower facing upward as well, we want to make sure it's the highest tower being stacked upwards, not sideways or multiple towers being created on the single boat, it needs to be a straight upwards tower being counted for score, please be sure to follow that closely!

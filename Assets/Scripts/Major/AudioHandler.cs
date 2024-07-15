@@ -5,7 +5,42 @@ public class AudioHandler : Singleton<AudioHandler>
 {
     [field: SerializeField] private GameObject ParentObject;
     [field: SerializeField] private List<string> AudioPaths;
+
     public Dictionary<string, Audible> Audibles;
+
+    private void SourceCreation(Audible audible, Transform parent = null, GameObject gameObj = null)
+    {
+        if (!gameObj)
+        {
+            gameObj = audible.Parent;
+
+            if (!gameObj)
+            {
+                gameObj = new GameObject();
+                gameObj.name = audible.name;
+            }
+        }
+
+        if (!parent)
+        {
+            parent = gameObj.transform.parent;
+            if (!parent) parent = transform;
+        }
+
+        gameObj.transform.parent = parent;
+
+        AudioSource source = gameObj.AddComponent<AudioSource>();
+        source.clip = audible.AudioClip;
+        source.outputAudioMixerGroup = audible.MixerGroup;
+        source.playOnAwake = false;
+
+        audible.Source = source;
+
+        bool check = string.IsNullOrWhiteSpace(audible.FriendlyName) || Audibles.ContainsKey(audible.FriendlyName);
+        string key = check ? audible.AudioClip.name : audible.FriendlyName;
+
+        Audibles.Add(key, audible);
+    }
 
     protected override void Initialize()
     {
@@ -19,16 +54,11 @@ public class AudioHandler : Singleton<AudioHandler>
 
         foreach (Audible data in localAudibles)
         {
-            AudioSource source = ParentObject.AddComponent<AudioSource>();
-            source.clip = data.AudioClip;
-            data.Source = source;
-
-            bool check = string.IsNullOrWhiteSpace(data.FriendlyName) || Audibles.ContainsKey(data.FriendlyName);
-            string key = (check ? data.AudioClip.name : data.FriendlyName);
-
-            Audibles.Add(key, data);
+            SourceCreation(data);
         }
     }
+
+    public void NewSource(Audible audible, Transform parent) => SourceCreation(audible, parent);
 
     private Audible GetAudible(string clip)
     {
@@ -50,9 +80,19 @@ public class AudioHandler : Singleton<AudioHandler>
         return audible.Source.isPlaying;
     }
 
+    internal bool IsPlaying(Audible audible)
+    {
+        return audible.Source.isPlaying;
+    }
+
     internal void Play(string clip)
     {
         Audible audible = GetAudible(clip);
+        audible.Source.Play();
+    }
+
+    internal void Play(Audible audible)
+    {
         audible.Source.Play();
     }
 
@@ -62,9 +102,19 @@ public class AudioHandler : Singleton<AudioHandler>
         audible.Source.PlayOneShot(audible.Source.clip);
     }
 
+    internal void PlayOnce(Audible audible)
+    {
+        audible.Source.PlayOneShot(audible.Source.clip);
+    }
+
     internal void Stop(string clip)
     {
         Audible audible = GetAudible(clip);
+        audible.Source.Stop();
+    }
+
+    internal void Stop(Audible audible)
+    {
         audible.Source.Stop();
     }
 
@@ -74,11 +124,19 @@ public class AudioHandler : Singleton<AudioHandler>
         audible.Source.Pause();
     }
 
+    internal void Pause(Audible audible)
+    {
+        audible.Source.Pause();
+    }
+
     internal void UnPause(string clip)
     {
         Audible audible = GetAudible(clip);
         audible.Source.UnPause();
     }
 
-    // Add in Fading Here!
+    internal void UnPause(Audible audible)
+    {
+        audible.Source.UnPause();
+    }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-// TODO: Add Box / Mesh Colliders on ALL Prefabs!
-
 public class VehicleHandler : MonoBehaviour
 {
     [System.Serializable]
@@ -23,19 +21,33 @@ public class VehicleHandler : MonoBehaviour
     [field: SerializeField] private List<VehicleSpawner> Spawns;
     [field: SerializeField] private List<GameObject> Models;
 
-    [field: Header("Settings - Spawning")]
+    [field: Header("Settings")]
     [field: SerializeField] private float IntervalBetweenSpawns { get; set; } = 1.0f;
 
+    [field: SerializeField] private int VehicleSpawnCap = 10;
+    [field: SerializeField] private float VehicleSpeed = 1.0f;
+
+    [field: Header("Miscellaneous")]
+    [field: SerializeField] private List<Audible> Sounds;
+    [field: SerializeField] private List<Audible> Voices;
+
     private float timeInterval = 0.0f;
+    private int vehiclesSpawned = 0;
 
     private void SpawnVehicle()
     {
+        if (vehiclesSpawned > VehicleSpawnCap)
+        {
+            Debug.LogWarning("The maximum vehicles that can be spawned have been reached! (" + VehicleSpawnCap.ToString() + ")", this);
+            return;
+        }
+
         int modelIndex = Random.Range(0, Models.Count);
         GameObject ModelPointer = Models[modelIndex];
 
         if (!ModelPointer)
         {
-            Debug.LogError("Error Getting Model in `List<GameObject> Models` Models with Integer Index: " + modelIndex.ToString(), this);
+            Debug.LogWarning("Error Getting Model in `List<GameObject> Models` Models with Integer Index: " + modelIndex.ToString(), this);
             return;
         }
 
@@ -51,12 +63,20 @@ public class VehicleHandler : MonoBehaviour
         if (!obj.TryGetComponent(out VehicleBehaviour VB))
             VB = obj.AddComponent<VehicleBehaviour>();
 
+        int voiceIndex = Random.Range(0, Voices.Count);
+        Audible voice = Voices[voiceIndex];
+
         VB.vehicleDestination = SpawnPointer.PointB.transform.position;
+        VB.vehicleSpeed = VehicleSpeed;
+
+        VB.vehicleVoice = voice;
 
         if (!obj.TryGetComponent(out XRGrabInteractable GI))
             GI = obj.AddComponent<XRGrabInteractable>();
 
         GI.interactionManager = VRInteractManager;
+
+        vehiclesSpawned++;
     }
 
     private void Update()
