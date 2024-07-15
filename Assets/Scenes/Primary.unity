@@ -838,7 +838,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6c1ad3dfa194c6d4290b7dc025c1a2f7, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c1ad3dfa194c6d4290b7dc025c1a2f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1507,7 +1507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883910115477343965, guid: 188cce93a683e4f42b5be20c2701ea58, type: 3}
       propertyPath: <EnableDeviceEmulator>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1899829871800687599, guid: 188cce93a683e4f42b5be20c2701ea58, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2203,6 +2203,10 @@ MonoBehaviour:
   - {fileID: 2985235004610267592, guid: 2c82264940b985f47a30ff5169118d61, type: 3}
   - {fileID: 2985235004610267592, guid: 51b5ea39f4e58164593bd662bf2c07ed, type: 3}
   <IntervalBetweenSpawns>k__BackingField: 1
+  VehicleSpawnCap: 10
+  VehicleSpeed: 1
+  Sounds: []
+  Voices: []
 --- !u!1001 &1332582786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3027,7 +3031,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9046c793eba51b84e859a3b8245ef033, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9046c793eba51b84e859a3b8245ef033, type: 3}
       propertyPath: m_LocalPosition.x
