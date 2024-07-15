@@ -4,8 +4,11 @@ public class GameHandler : Singleton<GameHandler>
 {
     [field: Header("Global Settings")]
     [field: SerializeField] private bool StartRunningOnStartup { get; set; } = false;
+    [field: SerializeField] private float MaxTime { get; set; } = 240.0f;
 
     private float TimeElapsed = 0.0f;
+    private float TimePlayedFor = 0.0f;
+
     private int CurrentPlayerScore = 0;
     private bool GameCurrentlyRunning = false;
 
@@ -24,7 +27,7 @@ public class GameHandler : Singleton<GameHandler>
         }
 
         GameCurrentlyRunning = true;
-        TimeElapsed = 0.0f;
+        TimeElapsed = MaxTime;
     }
 
     public void StopGame()
@@ -36,27 +39,27 @@ public class GameHandler : Singleton<GameHandler>
         }
 
         GameCurrentlyRunning = false;
-        
-        Debug.Log("GameHandler.cs | Stopping game! Data collected is displayed below:");
-        Debug.Log("Time Elapsed: " + TimeElapsed.ToString(), this);
-        Debug.Log("Player Score: " + CurrentPlayerScore.ToString(), this);
 
-        /*
-            # TODO #
-            1. Request Player Username (pull out virtual keyboard for this!)
-            2. After the Player inputs their name, close the virtual keyboard input and save the file with that name to disk (score and time included from here obviously)
-            3. ... i forgor 💀
-        */
+        Debug.Log("GameHandler.cs | Stopping game! Data collected is displayed below:");
+        Debug.Log("Player Score: " + CurrentPlayerScore.ToString(), this);
+        Debug.Log("Time Played For: " + TimePlayedFor.ToString(), this);
+
+        // MajorUI Should now open the "SaveContainer" Frame and have the player type in a name to save the data!
     }
 
     private void Update()
     {
         if (!GameCurrentlyRunning) return;
-        TimeElapsed += Time.deltaTime;
+        if (TimeElapsed <= 0.0f) StopGame();
+
+        TimeElapsed = Mathf.Clamp(TimeElapsed -= Time.deltaTime, 0.0f, MaxTime);
+        TimePlayedFor += Time.deltaTime;
     }
 
     public bool IsGameRunning() => GameCurrentlyRunning;
+
     public float GetTimeElapsed() => TimeElapsed;
+    public float GetTimePlayedFor() => TimePlayedFor;
 
     public int GetPlayerScore() => CurrentPlayerScore;
     public void SetPlayerScore(int Value) => CurrentPlayerScore = Value;
