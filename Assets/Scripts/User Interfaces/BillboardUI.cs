@@ -7,6 +7,8 @@ public class BillboardUI : MonoBehaviour
     [field: SerializeField] private TMP_Text Score;
     [field: SerializeField] private TMP_Text Timer;
 
+    [field: SerializeField] private bool HidePlainText = true;
+
     private float minutes;
     private float seconds;
 
@@ -25,7 +27,10 @@ public class BillboardUI : MonoBehaviour
         if (minutes < 10) minutesText = "0" + minutes.ToString();
         if (seconds < 10) secondsText = "0" + Mathf.Round(seconds).ToString();
 
-        Score.text = "Score: " + GameHandler.Instance.GetPlayerScore().ToString();
-        Timer.text = "Time Left: " + minutesText + ":" + secondsText;
+        string scoreAddition = (!HidePlainText) ? "Score: " : string.Empty;
+        string timeAddition = (!HidePlainText) ? "Time Left: " : string.Empty;
+
+        Score.text = scoreAddition + GameHandler.Instance.GetPlayerScore().ToString();
+        Timer.text = timeAddition + minutesText + ":" + secondsText;
     }
 }

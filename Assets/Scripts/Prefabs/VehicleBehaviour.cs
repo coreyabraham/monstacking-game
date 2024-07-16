@@ -26,7 +26,7 @@ public class VehicleBehaviour : MonoBehaviour
         if (!voicePlayed)
         {
             voicePlayed = true;
-            AudioHandler.Instance.PlayOnce(vehicleVoice);
+            if (vehicleVoice != null) AudioHandler.Instance.PlayOnce(vehicleVoice);
         }
     }
 
