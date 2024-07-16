@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -63,6 +63,8 @@ public class VehicleHandler : MonoBehaviour
         if (!obj.TryGetComponent(out VehicleBehaviour VB))
             VB = obj.AddComponent<VehicleBehaviour>();
 
+        VB.vehicleHandler = this;
+
         if (Voices.Count != 0)
         {
             int voiceIndex = Random.Range(0, Voices.Count);
@@ -79,6 +81,13 @@ public class VehicleHandler : MonoBehaviour
         GI.interactionManager = VRInteractManager;
 
         vehiclesSpawned++;
+    }
+
+    public void DestroyVehicle(GameObject Vehicle)
+    {
+        if (!Vehicle.TryGetComponent(out VehicleBehaviour VB)) return;
+        Destroy(Vehicle);
+        vehiclesSpawned--;
     }
 
     private void Update()

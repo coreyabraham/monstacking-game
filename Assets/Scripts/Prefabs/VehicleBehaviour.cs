@@ -5,8 +5,11 @@ public class VehicleBehaviour : MonoBehaviour
 {
     [HideInInspector] public Vector3 vehicleDestination;
     [HideInInspector] public float vehicleSpeed = 1.0f;
-    
+
     [HideInInspector] public Audible vehicleVoice;
+    [HideInInspector] public VehicleHandler vehicleHandler;
+
+    [HideInInspector] public bool insideVolume = false;
 
     private XRGrabInteractable xrInteractable;
 
@@ -21,7 +24,7 @@ public class VehicleBehaviour : MonoBehaviour
     public void OnVehicleGrab(SelectEnterEventArgs eventArgs)
     {
         allowMovement = false;
-        deletionSet = false;
+        ResetTimer(false);
 
         if (!voicePlayed)
         {
@@ -30,10 +33,12 @@ public class VehicleBehaviour : MonoBehaviour
         }
     }
 
-    public void OnVehicleLetGo(SelectExitEventArgs eventArgs)
+    public void OnVehicleLetGo(SelectExitEventArgs eventArgs) => ResetTimer(true);
+
+    public void ResetTimer(bool deletionStatus)
     {
-        deletionSet = true;
-        currentTimeout = 0.0f;
+        deletionSet = deletionStatus;
+        currentTimeout = 0.0f; 
     }
 
     private void FixedUpdate()
@@ -44,25 +49,22 @@ public class VehicleBehaviour : MonoBehaviour
         gameObject.transform.position = moveToPosition;
 
         if (gameObject.transform.position != vehicleDestination) return;
-        Destroy(gameObject);
+        vehicleHandler.DestroyVehicle(gameObject);
     }
 
     private void Update()
     {
         if (!deletionSet) return;
 
-        if (currentTimeout >= maxTimeout)
+        if (currentTimeout >= maxTimeout && !insideVolume)
         {
             xrInteractable.enabled = false;
-            Destroy(gameObject);
+            vehicleHandler.DestroyVehicle(gameObject);
             return;
         }
 
         currentTimeout += Time.deltaTime;
     }
 
-    private void Awake()
-    {
-        xrInteractable = gameObject.GetComponent<XRGrabInteractable>();
-    }
+    private void Awake() => xrInteractable = gameObject.GetComponent<XRGrabInteractable>();
 }
