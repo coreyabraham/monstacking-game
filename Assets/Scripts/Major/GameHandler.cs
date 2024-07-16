@@ -1,10 +1,21 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameHandler : Singleton<GameHandler>
 {
+    [System.Serializable]
+    public class GameEvents
+    {
+        public UnityEvent GameStartedEvent;
+        public UnityEvent<GameStats> GameStoppedEvent;
+    }
+
     [field: Header("Global Settings")]
     [field: SerializeField] private bool StartRunningOnStartup { get; set; } = false;
     [field: SerializeField] private float MaxTime { get; set; } = 180.0f;
+
+    [field: Header("Events")]
+    public GameEvents Events = new();
 
     private float TimeElapsed = 0.0f;
     private float TimePlayedFor = 0.0f;
@@ -28,6 +39,7 @@ public class GameHandler : Singleton<GameHandler>
 
         GameCurrentlyRunning = true;
         TimeElapsed = MaxTime;
+        Events.GameStartedEvent?.Invoke();
     }
 
     public void StopGame()
@@ -40,11 +52,19 @@ public class GameHandler : Singleton<GameHandler>
 
         GameCurrentlyRunning = false;
 
-        Debug.Log("GameHandler.cs | Stopping game! Data collected is displayed below:");
-        Debug.Log("Player Score: " + CurrentPlayerScore.ToString(), this);
-        Debug.Log("Time Played For: " + TimePlayedFor.ToString(), this);
+        Debug.Log("GameHandler.cs | Stopping game!");
 
-        // MajorUI Should now open the "SaveContainer" Frame and have the player type in a name to save the data!
+        GameStats gameStats = new()
+        {
+            PlayerScore = CurrentPlayerScore,
+            TimePlayedFor = TimePlayedFor,
+        };
+
+        Events.GameStoppedEvent?.Invoke(gameStats);
+
+        CurrentPlayerScore = 0;
+        TimePlayedFor = 0.0f;
+        TimeElapsed = 0.0f;
     }
 
     private void Update()

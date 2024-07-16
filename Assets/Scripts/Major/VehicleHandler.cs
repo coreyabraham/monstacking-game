@@ -63,13 +63,17 @@ public class VehicleHandler : MonoBehaviour
         if (!obj.TryGetComponent(out VehicleBehaviour VB))
             VB = obj.AddComponent<VehicleBehaviour>();
 
-        int voiceIndex = Random.Range(0, Voices.Count);
-        Audible voice = Voices[voiceIndex];
+        VB.vehicleHandler = this;
+
+        if (Voices.Count != 0)
+        {
+            int voiceIndex = Random.Range(0, Voices.Count);
+            Audible voice = Voices[voiceIndex];
+            VB.vehicleVoice = voice;
+        }
 
         VB.vehicleDestination = SpawnPointer.PointB.transform.position;
         VB.vehicleSpeed = VehicleSpeed;
-
-        VB.vehicleVoice = voice;
 
         if (!obj.TryGetComponent(out XRGrabInteractable GI))
             GI = obj.AddComponent<XRGrabInteractable>();
@@ -77,6 +81,13 @@ public class VehicleHandler : MonoBehaviour
         GI.interactionManager = VRInteractManager;
 
         vehiclesSpawned++;
+    }
+
+    public void DestroyVehicle(GameObject Vehicle)
+    {
+        if (!Vehicle.TryGetComponent(out VehicleBehaviour VB)) return;
+        Destroy(Vehicle);
+        vehiclesSpawned--;
     }
 
     private void Update()
