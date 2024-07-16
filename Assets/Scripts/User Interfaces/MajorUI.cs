@@ -134,13 +134,13 @@ public class MajorUI : MonoBehaviour
 
             case ButtonType.Score_Left:
                 {
-
+                    CycleListingIndex(false);
                 }
                 break;
 
             case ButtonType.Score_Right:
                 {
-
+                    CycleListingIndex(true);
                 }
                 break;
 
@@ -158,6 +158,11 @@ public class MajorUI : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private void CycleListingIndex(bool IsRight)
+    {
+        // CYCLE INDEX AND VISUALS!
     }
 
     private void GenerateListings()
@@ -189,7 +194,6 @@ public class MajorUI : MonoBehaviour
 
             clone.TimeLabel.text = "Time Played: " + minutesText + ":" + secondsText;
 
-            obj.SetActive(true);
             obj.transform.SetParent(ScoreListings.transform);
 
             RectTransform rt = obj.GetComponent<RectTransform>();

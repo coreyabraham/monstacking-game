@@ -1808,9 +1808,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deviceSimulator: {fileID: 9132409288962691684}
-  teleportProvider: {fileID: 0}
+  LeftHand: {fileID: 4342709608554840937}
+  RightHand: {fileID: 8246989877495050528}
   <EnableDeviceEmulator>k__BackingField: 0
-  <TeleportationToggleable>k__BackingField: 0
 --- !u!1001 &2679472532562176118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1978,6 +1978,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9965afd1df16c7f49a0ad4f80fe74284, type: 3}
   m_PrefabInstance: {fileID: 4070902621381929266}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &8246989877495050528 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 9965afd1df16c7f49a0ad4f80fe74284, type: 3}
+  m_PrefabInstance: {fileID: 4070902621381929266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8523509408014982011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2067,6 +2072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9965afd1df16c7f49a0ad4f80fe74284, type: 3}
+--- !u!137 &4342709608554840937 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 9965afd1df16c7f49a0ad4f80fe74284, type: 3}
+  m_PrefabInstance: {fileID: 8523509408014982011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8197448355108076688 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9965afd1df16c7f49a0ad4f80fe74284, type: 3}
