@@ -55,6 +55,11 @@ public class MajorUI : MonoBehaviour
     [field: SerializeField] private Button LeftButton;
     [field: SerializeField] private Button RightButton;
 
+    [field: Space(2.5f)]
+
+    [field: SerializeField] private GameObject ScoreListings;
+    [field: SerializeField] private GameObject Template;
+
     [field: Header("Assets - Saving")]
     [field: SerializeField] private TMP_InputField NameInput;
     [field: SerializeField] private Button FinishedButton;
@@ -62,13 +67,16 @@ public class MajorUI : MonoBehaviour
     [field: Header("Assets - Containers")]
     [field: SerializeField] List<Container> Containers;
 
-    private List<GameObject> DataListings = new();
+    private List<ScoreTemplate> DataListings = new();
     private int DataListingIndex = 0;
 
     private GameStats cachedStats;
 
     public void GameHasStopped(GameStats gameStats)
     {
+        print(cachedStats.PlayerScore);
+        print(cachedStats.TimePlayedFor);
+
         cachedStats = gameStats;
         ToggleContainers(ContainerType.Save);
     }
@@ -152,8 +160,51 @@ public class MajorUI : MonoBehaviour
         }
     }
 
+    private void GenerateListings()
+    {
+        DataHandler.Instance.UpdateCachedFiles();
+
+        foreach (SavableData data in DataHandler.Instance.CachedData)
+        {
+            // Read Data, then Clone a template, which'll be added to `DataListings`,  which'll then be readable via the Left and Right Score buttons!
+            print(data.name);
+
+            GameObject obj = Instantiate(Template);
+            ScoreTemplate clone = obj.GetComponent<ScoreTemplate>();
+
+            if (!clone) continue;
+
+            clone.name = data.name;
+            clone.NameLabel.text = "Name: " + data.name;
+            clone.ScoreLabel.text = "Score: " + data.score.ToString();
+
+            float minutes = Mathf.Floor(data.time / 60);
+            float seconds = Mathf.Round(data.time % 60);
+
+            string minutesText = minutes.ToString();
+            string secondsText = seconds.ToString();
+
+            if (minutes < 10) minutesText = "0" + minutes.ToString();
+            if (seconds < 10) secondsText = "0" + Mathf.Round(seconds).ToString();
+
+            clone.TimeLabel.text = "Time Played: " + minutesText + ":" + secondsText;
+
+            obj.SetActive(true);
+            obj.transform.SetParent(ScoreListings.transform);
+
+            RectTransform rt = obj.GetComponent<RectTransform>();
+            rt.offsetMin = new Vector2(0, 0);
+            rt.offsetMax = new Vector2(0, 0);
+
+            obj.transform.localPosition = Vector3.zero;
+
+            DataListings.Add(clone);
+        }
+    }
+
     private void Start()
     {
+        GenerateListings();
         ToggleContainers(ContainerType.Title);
 
         StartButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Main_Start));
@@ -165,11 +216,5 @@ public class MajorUI : MonoBehaviour
         RightButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Score_Right));
 
         FinishedButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Save_Finished));
-
-        foreach (SavableData data in DataHandler.Instance.CachedData)
-        {
-            print(data);
-            // Read Data, then Clone a template, which'll be added to `DataListings`,  which'll then be readable via the Left and Right Score buttons!
-        }
     }
 }
