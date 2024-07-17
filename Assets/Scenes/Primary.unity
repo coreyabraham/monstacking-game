@@ -2089,6 +2089,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 990522916}
+    - target: {fileID: 6575154839952995621, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 990522916}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
 --- !u!1001 &432878621
@@ -7217,7 +7221,6 @@ MonoBehaviour:
   - {fileID: 2985235004610267592, guid: 51b5ea39f4e58164593bd662bf2c07ed, type: 3}
   <IntervalBetweenSpawns>k__BackingField: 0.5
   VehicleSpawnCap: 100
-  VehicleSpeed: 1
   Sounds: []
   Voices: []
 --- !u!1001 &1330062660
