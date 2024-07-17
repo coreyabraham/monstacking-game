@@ -2019,11 +2019,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 156747535973032080, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 160279405896484923, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1775778848040519133, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
       propertyPath: m_Name
@@ -2031,7 +2031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626736538535073419, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3378467505983735742, guid: b7f5e7f901c18cb4599a40c81cfa7415, type: 3}
       propertyPath: m_RootOrder

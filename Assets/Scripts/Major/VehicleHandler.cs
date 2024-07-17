@@ -25,7 +25,6 @@ public class VehicleHandler : MonoBehaviour
     [field: SerializeField] private float IntervalBetweenSpawns { get; set; } = 1.0f;
 
     [field: SerializeField] private int VehicleSpawnCap = 10;
-    [field: SerializeField] private float VehicleSpeed = 1.0f;
 
     [field: Header("Miscellaneous")]
     [field: SerializeField] private List<Audible> Sounds;
@@ -73,7 +72,7 @@ public class VehicleHandler : MonoBehaviour
         }
 
         VB.vehicleDestination = SpawnPointer.PointB.transform.position;
-        VB.vehicleSpeed = VehicleSpeed;
+        VB.vehicleSpeed = GameHandler.Instance.VehicleSpeed;
 
         if (!obj.TryGetComponent(out XRGrabInteractable GI))
             GI = obj.AddComponent<XRGrabInteractable>();

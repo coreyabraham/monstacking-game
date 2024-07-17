@@ -10,6 +10,10 @@ public class GameHandler : Singleton<GameHandler>
         public UnityEvent<GameStats> GameStoppedEvent;
     }
 
+    [field: Header("Public Settings")]
+    public bool AdjustVehicleSpeedOvertime = false;
+    public float VehicleSpeed = 1.0f;
+
     [field: Header("Global Settings")]
     [field: SerializeField] private bool StartRunningOnStartup { get; set; } = false;
     [field: SerializeField] private float MaxTime { get; set; } = 180.0f;
@@ -74,6 +78,9 @@ public class GameHandler : Singleton<GameHandler>
 
         TimeElapsed = Mathf.Clamp(TimeElapsed -= Time.deltaTime, 0.0f, MaxTime);
         TimePlayedFor += Time.deltaTime;
+
+        if (!AdjustVehicleSpeedOvertime) return;
+        VehicleSpeed += (TimePlayedFor / Time.deltaTime);
     }
 
     public bool IsGameRunning() => GameCurrentlyRunning;
@@ -83,4 +90,10 @@ public class GameHandler : Singleton<GameHandler>
 
     public int GetPlayerScore() => CurrentPlayerScore;
     public void SetPlayerScore(int Value) => CurrentPlayerScore = Value;
+
+    public void SetMaxTime(float Time)
+    {
+        if (GameCurrentlyRunning) return;
+        MaxTime = Time;
+    }
 }
