@@ -27,7 +27,6 @@ public class VehicleHandler : MonoBehaviour
     [field: SerializeField] private int VehicleSpawnCap = 10;
 
     [field: Header("Miscellaneous")]
-    [field: SerializeField] private List<Audible> Sounds;
     [field: SerializeField] private List<Audible> Voices;
 
     private float timeInterval = 0.0f;
@@ -63,13 +62,6 @@ public class VehicleHandler : MonoBehaviour
             VB = obj.AddComponent<VehicleBehaviour>();
 
         VB.vehicleHandler = this;
-
-        foreach (Audible audible in Sounds)
-        {
-            AudioHandler.Instance.NewSource(audible, obj.transform);
-        }
-
-        VB.vehicleSounds = Sounds;
 
         if (Voices.Count != 0)
         {

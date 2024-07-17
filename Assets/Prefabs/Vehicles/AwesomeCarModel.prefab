@@ -155,6 +155,8 @@ MonoBehaviour:
   vehicleDestination: {x: 0, y: 0, z: 0}
   vehicleSpeed: 1
   vehicleVoice: {fileID: 0}
+  vehicleHandler: {fileID: 0}
+  insideVolume: 0
 --- !u!54 &1639752754308165995
 Rigidbody:
   m_ObjectHideFlags: 0

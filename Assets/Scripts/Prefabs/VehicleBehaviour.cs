@@ -9,7 +9,6 @@ public class VehicleBehaviour : MonoBehaviour
     [HideInInspector] public float vehicleSpeed = 1.0f;
 
     [HideInInspector] public Audible vehicleVoice;
-    [HideInInspector] public List<Audible> vehicleSounds;
 
     [HideInInspector] public VehicleHandler vehicleHandler;
 
@@ -29,9 +28,6 @@ public class VehicleBehaviour : MonoBehaviour
     public void OnVehicleGrab(SelectEnterEventArgs eventArgs)
     {
         vehicleHeld = true;
-
-        AudioHandler.Instance.Stop(vehicleSounds[0]);
-
         allowMovement = false;
 
         ResetTimer(false);
@@ -41,7 +37,6 @@ public class VehicleBehaviour : MonoBehaviour
             voicePlayed = true;
 
             AudioHandler.Instance.PlayOnce(vehicleVoice);
-            AudioHandler.Instance.PlayOnce(vehicleSounds[vehicleSounds.Count - 1]);
         }
     }
 
