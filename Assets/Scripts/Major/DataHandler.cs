@@ -4,12 +4,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 using UnityEngine.Events;
-using System.Drawing;
 
 public class DataHandler : Singleton<DataHandler>
 {
     [System.Serializable]
-    public class EventCollection
+    public class DataEvents
     {
         public UnityEvent ValidatedData;
         public UnityEvent SavedToFile;
@@ -28,7 +27,7 @@ public class DataHandler : Singleton<DataHandler>
     [field: SerializeField] private bool DisableDebugOutput { get; set; } = true;
 
     [field: Header("Others")]
-    public EventCollection Events;
+    public DataEvents Events;
     [field: SerializeField] public List<SavableData> CachedData = new();
 
     protected override void Initialize()

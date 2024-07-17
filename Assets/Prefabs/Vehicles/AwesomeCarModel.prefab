@@ -127,8 +127,8 @@ Transform:
   m_GameObject: {fileID: 662749635174150111}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3564160695651434627}
   - {fileID: 8114688166977559073}
@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae877b13ed04ca47b2a477dfef52c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleType: 3
   vehicleDestination: {x: 0, y: 0, z: 0}
+  vehicleSpeed: 1
+  vehicleVoice: {fileID: 0}
 --- !u!54 &1639752754308165995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -233,10 +234,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6390772159548271044}
+        m_TargetAssemblyTypeName: VehicleBehaviour, Assembly-CSharp
+        m_MethodName: OnVehicleGrab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6390772159548271044}
+        m_TargetAssemblyTypeName: VehicleBehaviour, Assembly-CSharp
+        m_MethodName: OnVehicleLetGo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []

@@ -159,7 +159,19 @@ MonoBehaviour:
     m_ActionId: 33754c03-48ec-46ef-9bc6-22ed6bfdd8e8
     m_ActionName: XRI LeftHand Interaction/Select
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1883910115477343965}
+        m_TargetAssemblyTypeName: VRSystem, Assembly-CSharp
+        m_MethodName: LeftHandInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e6005f29-e4c1-4f3b-8bf7-3a28bab5ca9c
     m_ActionName: XRI LeftHand Interaction/Select Value
   - m_PersistentCalls:
@@ -287,7 +299,19 @@ MonoBehaviour:
     m_ActionId: ac96c10b-c955-4a46-8e67-bf16bc069b53
     m_ActionName: XRI RightHand Interaction/Select
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1883910115477343965}
+        m_TargetAssemblyTypeName: VRSystem, Assembly-CSharp
+        m_MethodName: RightHandInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 39bbf1ac-21a3-413d-90f6-6dbf6efeaabe
     m_ActionName: XRI RightHand Interaction/Select Value
   - m_PersistentCalls:
@@ -539,6 +563,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <StartRunningOnStartup>k__BackingField: 0
+  <MaxTime>k__BackingField: 180
+  Events:
+    GameStartedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    GameStoppedEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8279279789232446673
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +730,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1883910115477343965 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8394951143543957616, guid: 3112ff1365973654a80d03d007650867, type: 3}
+  m_PrefabInstance: {fileID: 7972538828327528109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c45c2e9b58343e46b3b62320b80a655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1899829871800687599 stripped

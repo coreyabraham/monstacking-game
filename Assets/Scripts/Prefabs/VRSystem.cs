@@ -8,24 +8,26 @@ public class VRSystem : MonoBehaviour
 {
     [field: Header("Assets")]
     [field: SerializeField] private XRDeviceSimulator deviceSimulator;
-    [field: SerializeField] private TeleportationProvider teleportProvider;
+    [field: SerializeField] private SkinnedMeshRenderer LeftHand;
+    [field: SerializeField] private SkinnedMeshRenderer RightHand;
 
     [field: Space(5)]
 
     [field: Header("Settings")]
     [field: SerializeField] private bool EnableDeviceEmulator { get; set; } = false;
-    [field: SerializeField] private bool TeleportationToggleable { get; set; } = false;
+
+    public void LeftHandInput(InputAction.CallbackContext context)
+    {
+        LeftHand.SetBlendShapeWeight(0, context.ReadValue<float>() * 100);
+    }
+
+    public void RightHandInput(InputAction.CallbackContext context)
+    {
+        RightHand.SetBlendShapeWeight(0, context.ReadValue<float>() * 100);
+    }
 
     private void Awake()
     {
-        if (!TeleportationToggleable) teleportProvider.enabled = false;
         deviceSimulator.gameObject.SetActive(EnableDeviceEmulator);
-    }
-
-    public void A_Press(InputAction.CallbackContext context)
-    {
-        if (!context.ReadValueAsButton()) return;
-        teleportProvider.enabled = !teleportProvider;
-        AudioHandler.Instance.Play("TeleportToggle");
     }
 }
