@@ -8,8 +8,10 @@ public class AudioHandler : Singleton<AudioHandler>
 
     public Dictionary<string, Audible> Audibles;
 
-    private void SourceCreation(Audible audible, Transform parent = null, GameObject gameObj = null)
+    private void SourceCreation(Audible audible, Transform parent = null, GameObject gameObj = null, bool ranOnStartup = false)
     {
+        if (audible.SkipStartupCreation && ranOnStartup) return;
+        
         if (!gameObj)
         {
             gameObj = audible.Parent;
@@ -31,8 +33,9 @@ public class AudioHandler : Singleton<AudioHandler>
 
         AudioSource source = gameObj.AddComponent<AudioSource>();
         source.clip = audible.AudioClip;
+        source.loop = audible.LoopAudible;
+        source.playOnAwake = audible.PlayOnCreation;
         source.outputAudioMixerGroup = audible.MixerGroup;
-        source.playOnAwake = false;
 
         audible.Source = source;
 
@@ -54,7 +57,7 @@ public class AudioHandler : Singleton<AudioHandler>
 
         foreach (Audible data in localAudibles)
         {
-            SourceCreation(data);
+            SourceCreation(data, null, null, true);
         }
     }
 

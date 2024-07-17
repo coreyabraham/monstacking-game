@@ -517,6 +517,9 @@ MonoBehaviour:
     CachedDataUpdated:
       m_PersistentCalls:
         m_Calls: []
+    DeletedAllFiles:
+      m_PersistentCalls:
+        m_Calls: []
   CachedData: []
 --- !u!1 &7954162003607489397
 GameObject:
@@ -562,6 +565,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2547ca387ff0aa4cbebf450117a528c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AdjustVehicleSpeedOvertime: 0
+  VehicleSpeed: 1
   <StartRunningOnStartup>k__BackingField: 0
   <MaxTime>k__BackingField: 180
   Events:

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class VehicleVolumes : MonoBehaviour
 {
-    public List<VehicleBehaviour> Vehicles = new();
+    private List<VehicleBehaviour> Vehicles = new();
 
     private VehicleBehaviour GetVehicleBehaviour(Collider other) => other.gameObject.GetComponent<VehicleBehaviour>();
 

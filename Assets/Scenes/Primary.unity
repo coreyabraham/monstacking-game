@@ -4701,7 +4701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c1ec4da8d3ddb48b21a5f8518176f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Vehicles: []
 --- !u!65 &920714815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7221,8 +7220,35 @@ MonoBehaviour:
   - {fileID: 2985235004610267592, guid: 51b5ea39f4e58164593bd662bf2c07ed, type: 3}
   <IntervalBetweenSpawns>k__BackingField: 0.5
   VehicleSpawnCap: 100
-  Sounds: []
-  Voices: []
+  Sounds:
+  - {fileID: 11400000, guid: 5d0a99a3181059749ae9e259d0f28a57, type: 2}
+  - {fileID: 11400000, guid: e7f35946c5641e1449a93342285aacd6, type: 2}
+  Voices:
+  - {fileID: 11400000, guid: 074059acdb43c7b42b358de380d9222d, type: 2}
+  - {fileID: 11400000, guid: 5875daed3ee88a04280bd805bb1d67fc, type: 2}
+  - {fileID: 11400000, guid: 881029fbb7707cd498c6a6f4aad54c53, type: 2}
+  - {fileID: 11400000, guid: 0d0e4bbd1de25d0499c7e32c35c4b9d1, type: 2}
+  - {fileID: 11400000, guid: 6f08a696270101341b9f127ee28398a7, type: 2}
+  - {fileID: 11400000, guid: 9907ce8cf4008c34e845925176fa36ba, type: 2}
+  - {fileID: 11400000, guid: 94a54bd3a5b65a14fa0af2adc66ee7db, type: 2}
+  - {fileID: 11400000, guid: 2d1caffd9ebe3654a9aa09a1b245abbe, type: 2}
+  - {fileID: 11400000, guid: 803cc3d7ec5cc2b43aa5184d890b3bb4, type: 2}
+  - {fileID: 11400000, guid: ab683c877acf2c043abd318792de029d, type: 2}
+  - {fileID: 11400000, guid: 2976461f4d337cb4a969377210e52910, type: 2}
+  - {fileID: 11400000, guid: 9fc9781bf1e75e24d925a628230fe5fa, type: 2}
+  - {fileID: 11400000, guid: 7d975a990c4885f46b7a95f28b6ae577, type: 2}
+  - {fileID: 11400000, guid: 807ec3ddb46b7d548b156442303ebe69, type: 2}
+  - {fileID: 11400000, guid: 8c2be1f2406f7b24ebb9e90a773040b6, type: 2}
+  - {fileID: 11400000, guid: c3de4ba049196be43b162ad0c32d30f0, type: 2}
+  - {fileID: 11400000, guid: 66349b923bcbb61408165544df441138, type: 2}
+  - {fileID: 11400000, guid: 49f8d78826b93134980b3ad64b16d5be, type: 2}
+  - {fileID: 11400000, guid: 6f0ab4afe2ab743428282a8406bc22f0, type: 2}
+  - {fileID: 11400000, guid: 871f9f0fbf29e454382cdb56bd5c0a7d, type: 2}
+  - {fileID: 11400000, guid: 161334d5e77df6b4890782b847fe3f2b, type: 2}
+  - {fileID: 11400000, guid: e818e7a1b0045bf4bbaf9d54e2c77b47, type: 2}
+  - {fileID: 11400000, guid: 7ce5d53213c8deb40a5a6675ca767cb1, type: 2}
+  - {fileID: 11400000, guid: e1a78bd3b48eb5b4d9989fa1ae1d0774, type: 2}
+  - {fileID: 11400000, guid: d5f9ef5f851c6e840ae0abb65571e86f, type: 2}
 --- !u!1001 &1330062660
 PrefabInstance:
   m_ObjectHideFlags: 0

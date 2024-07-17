@@ -850,6 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2048870404063011024}
+  - component: {fileID: 6338062847618831338}
   m_Layer: 0
   m_Name: Camera Offset
   m_TagString: Untagged
@@ -875,6 +876,27 @@ Transform:
   m_Father: {fileID: 7413040025329477009}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6338062847618831338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821731234511424467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7472906bdd5bcbc4aaafc8c47dcca5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RandomizedMaxTime: {x: 7, y: 14}
+  Voices:
+  - {fileID: 11400000, guid: 7788496468faca940b05ae3c0634ba54, type: 2}
+  - {fileID: 11400000, guid: 260e4d96ce5760741b3727a436e6fab0, type: 2}
+  - {fileID: 11400000, guid: bed602d8681e4cc47852d4a43461d1f5, type: 2}
+  - {fileID: 11400000, guid: 7198817088d9b2a40bb4d532aeecbce1, type: 2}
+  - {fileID: 11400000, guid: fc5c8fba51b138940bcb3adde8810a54, type: 2}
+  - {fileID: 11400000, guid: febf84e7f1126ab4fa1dba3d44cc627f, type: 2}
+  - {fileID: 11400000, guid: c54772e06bcd89c41a1b289aa23e9e52, type: 2}
 --- !u!1 &7196092388383753053
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class MajorUI : MonoBehaviour
         Main_Exit,
 
         Score_Back,
+        Score_Clear,
         Score_Left,
         Score_Right,
 
@@ -65,6 +66,7 @@ public class MajorUI : MonoBehaviour
 
     [field: Header("Assets - Scoring")]
     [field: SerializeField] private Button ScoreBackButton;
+    [field: SerializeField] private Button ScoreClearAllButton;
     [field: SerializeField] private Button ScoreLeftButton;
     [field: SerializeField] private Button ScoreRightButton;
 
@@ -92,6 +94,7 @@ public class MajorUI : MonoBehaviour
     [field: SerializeField] private Button TimeStartButton;
 
     [field: Header("Assets - Miscellaneous")]
+    [field: SerializeField] private string ClickedSoundName = "UI Button Clicked";
     [field: SerializeField] private int MaxMinutesSetable = 10;
     [field: SerializeField] List<Container> Containers;
 
@@ -117,8 +120,11 @@ public class MajorUI : MonoBehaviour
         bool isVisible = DataListings.Count <= 0;
         
         NoDataLabel.gameObject.SetActive(isVisible);
+        
         ScoreLeftButton.gameObject.SetActive(!isVisible);
         ScoreRightButton.gameObject.SetActive(!isVisible);
+
+        ScoreClearAllButton.gameObject.SetActive(!isVisible);
     }
 
     private void CycleListingIndex(bool IsRight)
@@ -172,6 +178,8 @@ public class MajorUI : MonoBehaviour
 
     private void ButtonClicked(ButtonType Type)
     {
+        AudioHandler.Instance.Play(ClickedSoundName);
+
         switch (Type)
         {
             case ButtonType.Main_Start:
@@ -200,6 +208,19 @@ public class MajorUI : MonoBehaviour
             case ButtonType.Score_Back:
                 {
                     ToggleContainers(ContainerType.Title);
+                }
+                break;
+
+            case ButtonType.Score_Clear:
+                {
+                    static void DeletedAllFiles() => DataHandler.Instance.UpdateCachedFiles();
+                    DataHandler.Instance.Events.DeletedAllFiles.AddListener(() => DeletedAllFiles());
+
+                    DataHandler.Instance.DeleteAllFiles();
+                    DataHandler.Instance.Events.DeletedAllFiles.RemoveListener(DeletedAllFiles);
+
+                    ClearScoreListings();
+                    ScoreContainerToggled();
                 }
                 break;
 
@@ -268,6 +289,17 @@ public class MajorUI : MonoBehaviour
         }
     }
 
+    private void ClearScoreListings()
+    {
+        foreach (ScoreTemplate listing in DataListings)
+        {
+            Destroy(listing.gameObject);
+        }
+
+        DataListingIndex = 0;
+        DataListings.Clear();
+    }
+
     private void GenerateScoreListings()
     {
         DataHandler.Instance.UpdateCachedFiles();
@@ -327,9 +359,11 @@ public class MajorUI : MonoBehaviour
 
     private void KeyboardKeyInput(KeyboardKey key)
     {
-        if (key.Key == '<' && NameLabel.text.Length > 0)
+        AudioHandler.Instance.Play(ClickedSoundName);
+
+        if (key.Key == '<')
         {
-            NameLabel.text = NameLabel.text.Remove(NameLabel.text.Length - 1);
+            if (NameLabel.text.Length > 0) NameLabel.text = NameLabel.text.Remove(NameLabel.text.Length - 1);
             return;
         }
 
@@ -372,6 +406,7 @@ public class MajorUI : MonoBehaviour
         ExitButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Main_Exit));
 
         ScoreBackButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Score_Back));
+        ScoreClearAllButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Score_Clear));
         ScoreLeftButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Score_Left));
         ScoreRightButton?.onClick.AddListener(() => ButtonClicked(ButtonType.Score_Right));
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -7,12 +9,15 @@ public class VehicleBehaviour : MonoBehaviour
     [HideInInspector] public float vehicleSpeed = 1.0f;
 
     [HideInInspector] public Audible vehicleVoice;
+    [HideInInspector] public List<Audible> vehicleSounds;
+
     [HideInInspector] public VehicleHandler vehicleHandler;
 
     [HideInInspector] public bool insideVolume = false;
 
     private XRGrabInteractable xrInteractable;
 
+    private bool vehicleHeld = false;
     private bool allowMovement = true;
 
     private bool deletionSet = false;
@@ -23,20 +28,33 @@ public class VehicleBehaviour : MonoBehaviour
 
     public void OnVehicleGrab(SelectEnterEventArgs eventArgs)
     {
+        vehicleHeld = true;
+
+        AudioHandler.Instance.Stop(vehicleSounds[0]);
+
         allowMovement = false;
+
         ResetTimer(false);
 
         if (!voicePlayed)
         {
             voicePlayed = true;
-            if (vehicleVoice != null) AudioHandler.Instance.PlayOnce(vehicleVoice);
+
+            AudioHandler.Instance.PlayOnce(vehicleVoice);
+            AudioHandler.Instance.PlayOnce(vehicleSounds[vehicleSounds.Count - 1]);
         }
     }
 
-    public void OnVehicleLetGo(SelectExitEventArgs eventArgs) => ResetTimer(true);
+    public void OnVehicleLetGo(SelectExitEventArgs eventArgs)
+    {
+        vehicleHeld = false;
+        ResetTimer(true);
+    }
 
     public void ResetTimer(bool deletionStatus)
     {
+        if (vehicleHeld) return;
+
         deletionSet = deletionStatus;
         currentTimeout = 0.0f; 
     }
@@ -54,6 +72,11 @@ public class VehicleBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (!GameHandler.Instance.IsGameRunning())
+        {
+            xrInteractable.enabled = false;
+        }
+
         if (!deletionSet) return;
 
         if (currentTimeout >= maxTimeout && !insideVolume)

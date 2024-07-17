@@ -80,7 +80,7 @@ public class GameHandler : Singleton<GameHandler>
         TimePlayedFor += Time.deltaTime;
 
         if (!AdjustVehicleSpeedOvertime) return;
-        VehicleSpeed += (TimePlayedFor / Time.deltaTime);
+        VehicleSpeed += Time.deltaTime / TimePlayedFor;
     }
 
     public bool IsGameRunning() => GameCurrentlyRunning;

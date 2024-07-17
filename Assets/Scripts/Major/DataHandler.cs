@@ -14,6 +14,7 @@ public class DataHandler : Singleton<DataHandler>
         public UnityEvent SavedToFile;
         public UnityEvent LoadedFromFile;
         public UnityEvent CachedDataUpdated;
+        public UnityEvent DeletedAllFiles;
     }
 
     [field: Header("Settings")]
@@ -104,6 +105,19 @@ public class DataHandler : Singleton<DataHandler>
         if (!DisableDebugOutput) Debug.Log("DataHandler.cs | Successfully retrieved data from file: " + username + "! (" + GetFolderDirectory() + "/" + username + DataAttribute + ")");
 
         return loadedData;
+    }
+
+    public void DeleteAllFiles()
+    {
+        if (!Directory.Exists(DataFolder)) return;
+        string[] files = Directory.GetFiles(DataFolder);
+
+        foreach (string file in files)
+        {
+            File.Delete(file);
+        }
+
+        Events.DeletedAllFiles?.Invoke();
     }
 
     public void UpdateCachedFiles()

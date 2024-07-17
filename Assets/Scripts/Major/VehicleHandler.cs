@@ -64,10 +64,21 @@ public class VehicleHandler : MonoBehaviour
 
         VB.vehicleHandler = this;
 
+        foreach (Audible audible in Sounds)
+        {
+            AudioHandler.Instance.NewSource(audible, obj.transform);
+        }
+
+        VB.vehicleSounds = Sounds;
+
         if (Voices.Count != 0)
         {
-            int voiceIndex = Random.Range(0, Voices.Count);
-            Audible voice = Voices[voiceIndex];
+            int voiceIndex = Random.Range(0, Voices.Count - 1);
+            Audible chosenVoice = Voices[voiceIndex];
+
+            Audible voice = Instantiate(chosenVoice);
+
+            if (!voice.Source) AudioHandler.Instance.NewSource(voice, obj.transform);
             VB.vehicleVoice = voice;
         }
 
