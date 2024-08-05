@@ -29,7 +29,6 @@ public class VehicleVolumes : MonoBehaviour
 
     private void Update()
     {
-        // CHECK VELOCITY AND STACKABILITY HERE!
         GameHandler.Instance.SetPlayerScore(Vehicles.Count);
     }
 }

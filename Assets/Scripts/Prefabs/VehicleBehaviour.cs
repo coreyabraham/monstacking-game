@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -24,6 +22,8 @@ public class VehicleBehaviour : MonoBehaviour
 
     private float currentTimeout = 0.0f;
     private float maxTimeout = 3.0f;
+
+    public void GameHasEnded(GameStats stats) => vehicleHandler.DestroyVehicle(gameObject);
 
     public void OnVehicleGrab(SelectEnterEventArgs eventArgs)
     {
@@ -84,5 +84,9 @@ public class VehicleBehaviour : MonoBehaviour
         currentTimeout += Time.deltaTime;
     }
 
-    private void Awake() => xrInteractable = gameObject.GetComponent<XRGrabInteractable>();
+    private void Awake()
+    {
+        xrInteractable = gameObject.GetComponent<XRGrabInteractable>();
+        GameHandler.Instance.Events.GameStoppedEvent?.AddListener(GameHasEnded);
+    }
 }

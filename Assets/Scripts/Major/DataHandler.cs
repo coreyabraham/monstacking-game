@@ -18,7 +18,7 @@ public class DataHandler : Singleton<DataHandler>
     }
 
     [field: Header("Settings")]
-    [field: SerializeField] private string DataFolder { get; set; } = "CommonData";
+    [field: SerializeField] private string DataFolderName { get; set; } = "CommonData";
     [field: SerializeField] private string DataAttribute { get; set; } = ".dat";
     [field: SerializeField] private string DefaultDataUserName { get; set; } = "DataFile";
 
@@ -31,8 +31,12 @@ public class DataHandler : Singleton<DataHandler>
     public DataEvents Events;
     [field: SerializeField] public List<SavableData> CachedData = new();
 
+    private string DataFolder;
+
     protected override void Initialize()
     {
+        DataFolder = Application.persistentDataPath + "/" + DataFolderName;
+
         if (!ValidateSetupOnStartup) return;
         
         UpdateCachedFiles();
@@ -43,7 +47,7 @@ public class DataHandler : Singleton<DataHandler>
         Events.ValidatedData?.Invoke();
     }
 
-    private string GetFolderDirectory() => Directory.GetCurrentDirectory() + "/" + DataFolder;
+    private string GetFolderDirectory() => DataFolder;
 
     private string ResolveDuplicatedUserName(string username)
     {

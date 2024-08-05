@@ -569,7 +569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &894746282087548880
 RectTransform:
   m_ObjectHideFlags: 0
@@ -876,7 +876,6 @@ MonoBehaviour:
   TimeBackButton: {fileID: 2302607045647392761}
   TimeStartButton: {fileID: 743054567726917457}
   ClickedSoundName: UI Button Clicked
-  HoverSoundName: UI Button Hovered
   MaxMinutesSetable: 10
   Containers:
   - Type: 1
